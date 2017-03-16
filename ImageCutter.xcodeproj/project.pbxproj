@@ -13,6 +13,7 @@
 		1DE247DF1E7A59710010A730 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE247D91E7A59710010A730 /* ViewController.swift */; };
 		1DE247E01E7A59710010A730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DE247DC1E7A59710010A730 /* LaunchScreen.storyboard */; };
 		1DE247E11E7A59710010A730 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DE247DD1E7A59710010A730 /* Main.storyboard */; };
+		1DF4B1D31E7A8D1B0030D35D /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF4B1D21E7A8D1B0030D35D /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1DE247D91E7A59710010A730 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1DE247DC1E7A59710010A730 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1DE247DD1E7A59710010A730 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1DF4B1D21E7A8D1B0030D35D /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				1DE247D91E7A59710010A730 /* ViewController.swift */,
+				1DF4B1D21E7A8D1B0030D35D /* MenuViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				1DE247DF1E7A59710010A730 /* ViewController.swift in Sources */,
 				1DE247DE1E7A59710010A730 /* AppDelegate.swift in Sources */,
 				1DE247C91E7A58070010A730 /* ImageCutter.xcdatamodeld in Sources */,
+				1DF4B1D31E7A8D1B0030D35D /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

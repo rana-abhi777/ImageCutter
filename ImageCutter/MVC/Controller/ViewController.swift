@@ -23,11 +23,9 @@ class ViewController: UIViewController {
     var rows = 3
     var columns = 3
     
-    
-    @IBOutlet weak var btnExperimental: UIButton!
-    @IBOutlet weak var splitView1: UIView!
-    @IBOutlet weak var btnSplitImage: UIButton!
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var viewImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -96,12 +94,12 @@ class ViewController: UIViewController {
 //            cgwidth = contextSize.width
 //            cgheight = contextSize.width
 //        }
-        let rect: CGRect = CGRect(x: posX, y: posY, width: CGFloat(200000), height: CGFloat(200000))
+        let rect: CGRect = CGRect(x: posX, y: posY, width: CGFloat(300), height: CGFloat(300))
         // Create bitmap image from context using the rect
         let imageRef: CGImage = imageSet.cgImage!.cropping(to: rect)!
         
         // Create a new image based on the imageRef and rotate back to the original orientation
-        let image: UIImage = UIImage(cgImage: imageRef, scale: 4.0625, orientation: image.imageOrientation)
+        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
         
         return image
     }
@@ -137,9 +135,8 @@ class ViewController: UIViewController {
     @IBAction func btnSplitImage(_ sender: Any) {
         
         let image = cropToBounds(image: imageSet, width: Double(widthSmallView), height: Double(heightSmallView))
-        
-        self.splitView1.backgroundColor = UIColor(patternImage: image)
-        self.splitView1.contentMode = UIViewContentMode.scaleAspectFit
+        imgView.contentMode = .scaleAspectFit
+        imgView.image = image
     }
 }
 
