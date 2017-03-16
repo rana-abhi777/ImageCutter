@@ -20,11 +20,10 @@ class MenuViewController: UIViewController {
         // Do any additional setup after loading the view.
         imagePicker.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func btnForwardMove(_ sender: Any) {
+        
     }
+    
     @IBAction func btnUploadImageClick(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
