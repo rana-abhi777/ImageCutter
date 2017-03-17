@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D6D6CF41E7B9FA6001283D5 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D6CF31E7B9FA6001283D5 /* Functions.swift */; };
 		1DE247C91E7A58070010A730 /* ImageCutter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DE247C71E7A58070010A730 /* ImageCutter.xcdatamodeld */; };
 		1DE247CB1E7A58070010A730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DE247CA1E7A58070010A730 /* Assets.xcassets */; };
 		1DE247DE1E7A59710010A730 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE247D61E7A59710010A730 /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D6D6CF31E7B9FA6001283D5 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		1DE247BD1E7A58070010A730 /* ImageCutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageCutter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE247C81E7A58070010A730 /* ImageCutter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageCutter.xcdatamodel; sourceTree = "<group>"; };
 		1DE247CA1E7A58070010A730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			children = (
 				1DE247D91E7A59710010A730 /* ViewController.swift */,
 				1DF4B1D21E7A8D1B0030D35D /* MenuViewController.swift */,
+				1D6D6CF31E7B9FA6001283D5 /* Functions.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				1DE247DF1E7A59710010A730 /* ViewController.swift in Sources */,
 				1DE247DE1E7A59710010A730 /* AppDelegate.swift in Sources */,
 				1DE247C91E7A58070010A730 /* ImageCutter.xcdatamodeld in Sources */,
+				1D6D6CF41E7B9FA6001283D5 /* Functions.swift in Sources */,
 				1DF4B1D31E7A8D1B0030D35D /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
