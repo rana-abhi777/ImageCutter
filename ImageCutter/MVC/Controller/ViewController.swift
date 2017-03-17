@@ -9,18 +9,28 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    // image uploaded varaible and the array for the split images
     var imageUploaded = UIImage()
     var imageSplitArray = [UIImage]()
     
+    // calculate the image dimensions for the uploaded one
     var widthImageUploaded: CGFloat?
     var heightImageUploaded: CGFloat?
     
+    // rows and cols for the splitting of the image
     let rowsSuper = 3
     let columnsSuper = 3
     
+    // timer for the timer and the alert of ending the puzzle after the ending of the time
     var startClock = Timer()
     var timer = 5
+    
+    var translation = CGPoint()// translation point in the gesture applied in the image views
+    
+    
+    
+    @IBOutlet var imgUpperViewCollection: [UIImageView]!
+    
     
     @IBOutlet var imgLowerViewCollection: [UIImageView]!
     @IBOutlet weak var lblTimeLeftTitle: UILabel!
@@ -44,15 +54,30 @@ class ViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func getTheCenterOfUpperCollection(imgViewCollection: [UIImageView]) {
+        for index in 0...(imgLowerViewCollection.count - 1){
+            
+            print("the position is x: \(imgLowerViewCollection[index].center.x) and y: \(imgLowerViewCollection[index].center.y)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(HandlePanAll(_:)))
+//        self.view.addGestureRecognizer(gestureRecognizer)
         // Do any additional setup after loading the view, typically from a nib.
         imageUploaded = viewImageView.image!
         widthImageUploaded = imageUploaded.size.width
         heightImageUploaded = imageUploaded.size.height
         //startTimer()
-        startClock = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.countDown), userInfo: nil, repeats: true)
+//        startClock = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.countDown), userInfo: nil, repeats: true)
         //addDelay()
+        print("The image collection lower coordinates are : ")
+        for index in 0...(imgLowerViewCollection.count - 1){
+            
+            print("the position is x: \(imgLowerViewCollection[index].center.x) and y: \(imgLowerViewCollection[index].center.y)")
+        }
+        
         
     }
     func startTimer() {
@@ -68,6 +93,63 @@ class ViewController: UIViewController {
         timer = timer - 1
         
     }
+    @IBAction func HandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .began:
+            print("Gesture started at x : \(gestureRecognizer.view!.center.x) y: \(gestureRecognizer.view!.center.y)")
+        case .changed:
+            translation = gestureRecognizer.translation(in: self.view)
+            // note: 'view' is optional and need to be unwrapped
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+        case .ended:
+            print("Gesture eneded at x : \(gestureRecognizer.view!.center.x) y: \(gestureRecognizer.view!.center.y)")
+            var pointEnded = CGPoint()
+            pointEnded.x = gestureRecognizer.view!.center.x
+            pointEnded.y = gestureRecognizer.view!.center.y
+            var viewItersectedIndex = [Int]()
+            var indexCenterDistanceDict = [Int: CGFloat]()
+            for index in 0...(imgUpperViewCollection.count - 1) {
+                // check intersection of 2 views
+                if (imgUpperViewCollection[index].frame.intersects(gestureRecognizer.view!.frame)) {
+                    print("collision detected with \(index) image view")
+                    viewItersectedIndex.append((index + 1))
+                    let centerOfIntersected = imgUpperViewCollection[index].center
+                    let distanceFromCenter = distance(a: pointEnded, b: centerOfIntersected)
+                    indexCenterDistanceDict[index] = distanceFromCenter
+                    // this results is view which being mvoed to occupy the as much space as it's parent view.
+                    //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
+                }
+            }
+            let indexSelected = shortestDistance(distanceDictionary: indexCenterDistanceDict)
+            gestureRecognizer.view!.frame = imgUpperViewCollection[indexSelected].frame
+        default:
+            print("default executed")
+        }
+        
+    }
+    // calculate the shortest distance between the intersecting views 
+    // and returning the index of the shortest distance view 
+    func shortestDistance (distanceDictionary: [Int: CGFloat]) -> Int {
+        var index = 20
+        var min = CGFloat(100)
+        for (key,value) in distanceDictionary {
+            if value < min {
+                min = value
+                index = key
+            }
+        }
+        return index
+    }
+    // calculate the distance between the centers of the 2 views one - the intersecting view and the center of position 
+    // where pan gesture ended
+    func distance(a: CGPoint, b: CGPoint) -> CGFloat {
+        let xDist = a.x - b.x
+        let yDist = a.y - b.y
+        return CGFloat(sqrt((xDist * xDist) + (yDist * yDist)))
+    }
+    
+    
     func addDelay() {
         // adding a timer delay =====================================================
         let when = DispatchTime.now() + 10 // change 2 to desired number of seconds
