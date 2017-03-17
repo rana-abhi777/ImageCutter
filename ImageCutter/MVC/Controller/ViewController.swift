@@ -93,6 +93,7 @@ class ViewController: UIViewController {
         timer = timer - 1
         
     }
+    // this below handle pan function is only for making dragging an image from lower image view collection to upper image view collection
     @IBAction func HandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         switch gestureRecognizer.state {
         case .began:
@@ -117,7 +118,7 @@ class ViewController: UIViewController {
                     let centerOfIntersected = imgUpperViewCollection[index].center
                     let distanceFromCenter = distance(a: pointEnded, b: centerOfIntersected)
                     indexCenterDistanceDict[index] = distanceFromCenter
-                    // this results is view which being mvoed to occupy the as much space as it's parent view.
+                    // this results is view which being moved to occupy the as much space as it's parent view.
                     //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
                 }
             }
