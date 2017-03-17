@@ -88,6 +88,10 @@
                                 <rect key="frame" x="12" y="56" width="96" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="4pG-0e-jzP" appends="YES" id="5qD-4C-ntD"/>
+                                </connections>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-4I-of1">
                                 <rect key="frame" x="112" y="56" width="96" height="78"/>
@@ -123,6 +127,7 @@
                                 <rect key="frame" x="112" y="218" width="96" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="htA-YC-LNb">
                                 <rect key="frame" x="211" y="218" width="96" height="78"/>
@@ -329,6 +334,12 @@
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Ids-uE-XFt">
                     <connections>
                         <action selector="HandlePan:" destination="BYZ-38-t0r" id="QIk-kg-LlB"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="00u-bL-pqX"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="4pG-0e-jzP">
+                    <connections>
+                        <action selector="UpperHandlePan:" destination="BYZ-38-t0r" id="4B6-Xf-3Qg"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
