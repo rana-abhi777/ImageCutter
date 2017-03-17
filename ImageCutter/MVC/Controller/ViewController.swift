@@ -121,7 +121,7 @@ class ViewController: UIViewController {
         case .changed:
             translation = gestureRecognizer.translation(in: self.view)
             // note: 'view' is optional and need to be unwrapped
-            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x/* + translation.x*/, y: gestureRecognizer.view!.center.y/* + translation.y*/)
             gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
         case .ended:
             print("Gesture eneded at x : \(gestureRecognizer.view!.center.x) y: \(gestureRecognizer.view!.center.y)")
@@ -142,30 +142,30 @@ class ViewController: UIViewController {
                     //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
                 }
                 else {
-                    if recognizer.state == UIGestureRecognizerState.Ended {
-                        // 1
-                        let velocity = recognizer.velocityInView(self.view)
-                        let magnitude = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
-                        let slideMultiplier = magnitude / 200
-                        println("magnitude: \(magnitude), slideMultiplier: \(slideMultiplier)")
-                        
-                        // 2
-                        let slideFactor = 0.1 * slideMultiplier     //Increase for more of a slide
-                        // 3
-                        var finalPoint = CGPoint(x:recognizer.view!.center.x + (velocity.x * slideFactor),
-                                                 y:recognizer.view!.center.y + (velocity.y * slideFactor))
-                        // 4
-                        finalPoint.x = min(max(finalPoint.x, 0), self.view.bounds.size.width)
-                        finalPoint.y = min(max(finalPoint.y, 0), self.view.bounds.size.height)
-                        
-                        // 5
-                        UIView.animateWithDuration(Double(slideFactor * 2),
-                                                   delay: 0,
-                                                   // 6
-                            options: UIViewAnimationOptions.CurveEaseOut,
-                            animations: {recognizer.view!.center = finalPoint },
-                            completion: nil)
-                    }
+//                    if gestureRecognizer.state == UIGestureRecognizerState.ended {
+//                        // 1
+//                        let velocity = gestureRecognizer.velocity(in: self.view)
+//                        let magnitude = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
+//                        let slideMultiplier = magnitude / 200
+//                        print("magnitude: \(magnitude), slideMultiplier: \(slideMultiplier)")
+//                        
+//                        // 2
+//                        let slideFactor = 0.1 * slideMultiplier     //Increase for more of a slide
+//                        // 3
+//                        var finalPoint = CGPoint(x:gestureRecognizer.view!.center.x + (velocity.x * slideFactor),
+//                                                 y:gestureRecognizer.view!.center.y + (velocity.y * slideFactor))
+//                        // 4
+//                        finalPoint.x = min(max(finalPoint.x, 0), self.view.bounds.size.width)
+//                        finalPoint.y = min(max(finalPoint.y, 0), self.view.bounds.size.height)
+//                        
+//                        // 5
+//                        UIView.animate(withDuration: Double(slideFactor * 2),
+//                                                   delay: 0,
+//                                                   // 6
+//                                        options: UIViewAnimationOptions.curveEaseOut,
+//                                        animations: {gestureRecognizer.view!.center = finalPoint },
+//                                        completion: nil)
+//                    }
                 }
                 
             }
