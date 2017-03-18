@@ -35,7 +35,10 @@ class ViewController: UIViewController {
     
     
     @IBOutlet weak var viewLowerImageViewFrame: UIView!
-    @IBOutlet weak var viewUpperImageViewFrame: UIView!
+    
+    @IBOutlet weak var viewUpperImageViewCollection: UIView!
+    
+    
     @IBOutlet var imgLowerViewCollection: [UIImageView]!
     @IBOutlet weak var lblTimeLeftTitle: UILabel!
     @IBOutlet weak var lblTimeLeftValue: UILabel!
@@ -98,24 +101,24 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func UpperCollectionHandlePan(_ gesture: UIPanGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            print("Gesture started at x: \(gesture.view!.center.x) y: \(gesture.view!.center.y)")
-            imgLowerViewCollection[0].isUserInteractionEnabled = false
-        case .changed:
-            imgLowerViewCollection[0].isUserInteractionEnabled = false
-            translation = gesture.translation(in: self.view)
-            // note: 'view' is optional and need to be unwrapped
-            gesture.view!.center = CGPoint(x: gesture.view!.center.x + translation.x, y: gesture.view!.center.y + translation.y)
-            gesture.setTranslation(CGPoint.zero, in: self.view)
-        case .ended:
-            print("Gesture eneded at x : \(gesture.view!.center.x) y: \(gesture.view!.center.y)")
-        default:
-            print("default case man!")
-        }
-
-    }
+//    @IBAction func UpperCollectionHandlePan(_ gesture: UIPanGestureRecognizer) {
+//        switch gesture.state {
+//        case .began:
+//            print("Gesture started at x: \(gesture.view!.center.x) y: \(gesture.view!.center.y)")
+//            imgLowerViewCollection[0].isUserInteractionEnabled = false
+//        case .changed:
+//            imgLowerViewCollection[0].isUserInteractionEnabled = false
+//            translation = gesture.translation(in: self.view)
+//            // note: 'view' is optional and need to be unwrapped
+//            gesture.view!.center = CGPoint(x: gesture.view!.center.x + translation.x, y: gesture.view!.center.y + translation.y)
+//            gesture.setTranslation(CGPoint.zero, in: self.view)
+//        case .ended:
+//            print("Gesture eneded at x : \(gesture.view!.center.x) y: \(gesture.view!.center.y)")
+//        default:
+//            print("default case man!")
+//        }
+//
+//    }
     
     // this below handle pan function is only for making dragging an image from lower image view collection to upper image view collection
     @IBAction func HandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -141,7 +144,7 @@ class ViewController: UIViewController {
             var indexCenterDistanceDict = [Int: CGFloat]()
             // 2 conditions for checking whether the gesture point intersects with the upper view frame or not
             // if it does we find the intersecting image view distances
-            if (viewUpperImageViewFrame.frame.intersects(image.frame)) {
+            if (viewUpperImageViewCollection.frame.intersects(image.frame)) {
                 for index in 0...(imgUpperViewCollection.count - 1) {
                     // check intersection of 2 views
                     if (imgUpperViewCollection[index].frame.intersects(image.frame)) {
@@ -191,6 +194,18 @@ class ViewController: UIViewController {
                     
                 })
             }
+            // checking whether the upper collection images are all filled up.
+            var countNil = 0
+            for imageView in imgUpperViewCollection {
+                if imageView.image != nil {
+                    print("doing nothing bruh!")
+                    countNil += 1
+                }
+            }
+            if countNil == imgUpperViewCollection.count {
+                genericAlertMessage(theTitle: "You have filled up all of the spaces!!!", theMessage: "Since you don't have PRO version of this app there won't be any checking of puzzle")
+            }
+            
             
         default:
             print("default executed")
