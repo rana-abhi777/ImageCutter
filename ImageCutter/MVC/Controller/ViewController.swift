@@ -26,12 +26,14 @@ class ViewController: UIViewController {
     var timer = 5
     
     var translation = CGPoint()// translation point in the gesture applied in the image views
-    
+    var initialPoint = CGPoint() // to get hold of the initial point when pan gesture got started
     
     
     @IBOutlet var imgUpperViewCollection: [UIImageView]!
     
     
+    @IBOutlet weak var viewLowerImageViewFrame: UIView!
+    @IBOutlet weak var viewUpperImageViewFrame: UIView!
     @IBOutlet var imgLowerViewCollection: [UIImageView]!
     @IBOutlet weak var lblTimeLeftTitle: UILabel!
     @IBOutlet weak var lblTimeLeftValue: UILabel!
@@ -112,7 +114,7 @@ class ViewController: UIViewController {
     
     // this below handle pan function is only for making dragging an image from lower image view collection to upper image view collection
     @IBAction func HandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        var initialPoint = CGPoint()
+        //var initialPoint = CGPoint()
         switch gestureRecognizer.state {
         case .began:
             print("Gesture started at x : \(gestureRecognizer.view!.center.x) y: \(gestureRecognizer.view!.center.y)")
@@ -121,7 +123,7 @@ class ViewController: UIViewController {
         case .changed:
             translation = gestureRecognizer.translation(in: self.view)
             // note: 'view' is optional and need to be unwrapped
-            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x/* + translation.x*/, y: gestureRecognizer.view!.center.y/* + translation.y*/)
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
             gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
         case .ended:
             print("Gesture eneded at x : \(gestureRecognizer.view!.center.x) y: \(gestureRecognizer.view!.center.y)")
@@ -130,48 +132,80 @@ class ViewController: UIViewController {
             pointEnded.y = gestureRecognizer.view!.center.y
             var viewItersectedIndex = [Int]()
             var indexCenterDistanceDict = [Int: CGFloat]()
-            for index in 0...(imgUpperViewCollection.count - 1) {
-                // check intersection of 2 views
-                if (imgUpperViewCollection[index].frame.intersects(gestureRecognizer.view!.frame)) {
-                    print("collision detected with \(index) image view")
-                    viewItersectedIndex.append((index + 1))
-                    let centerOfIntersected = imgUpperViewCollection[index].center
-                    let distanceFromCenter = distance(a: pointEnded, b: centerOfIntersected)
-                    indexCenterDistanceDict[index] = distanceFromCenter
-                    // this results is view which being moved to occupy the as much space as it's parent view.
-                    //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
+            // 2 conditions for checking whether the gesture point intersects with the upper view frame or not
+            // if it does we find the intersecting image view distances
+            if (viewUpperImageViewFrame.frame.intersects(gestureRecognizer.view!.frame)) {
+                for index in 0...(imgUpperViewCollection.count - 1) {
+                    // check intersection of 2 views
+                    if (imgUpperViewCollection[index].frame.intersects(gestureRecognizer.view!.frame)) {
+                        print("collision detected with \(index) image view")
+                        viewItersectedIndex.append((index + 1))
+                        let centerOfIntersected = imgUpperViewCollection[index].center
+                        let distanceFromCenter = distance(a: pointEnded, b: centerOfIntersected)
+                        indexCenterDistanceDict[index] = distanceFromCenter
+                        // this results is view which being moved to occupy the as much space as it's parent view.
+                        //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
+                    }
                 }
-                else {
-//                    if gestureRecognizer.state == UIGestureRecognizerState.ended {
-//                        // 1
-//                        let velocity = gestureRecognizer.velocity(in: self.view)
-//                        let magnitude = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
-//                        let slideMultiplier = magnitude / 200
-//                        print("magnitude: \(magnitude), slideMultiplier: \(slideMultiplier)")
-//                        
-//                        // 2
-//                        let slideFactor = 0.1 * slideMultiplier     //Increase for more of a slide
-//                        // 3
-//                        var finalPoint = CGPoint(x:gestureRecognizer.view!.center.x + (velocity.x * slideFactor),
-//                                                 y:gestureRecognizer.view!.center.y + (velocity.y * slideFactor))
-//                        // 4
-//                        finalPoint.x = min(max(finalPoint.x, 0), self.view.bounds.size.width)
-//                        finalPoint.y = min(max(finalPoint.y, 0), self.view.bounds.size.height)
-//                        
-//                        // 5
-//                        UIView.animate(withDuration: Double(slideFactor * 2),
-//                                                   delay: 0,
-//                                                   // 6
-//                                        options: UIViewAnimationOptions.curveEaseOut,
-//                                        animations: {gestureRecognizer.view!.center = finalPoint },
-//                                        completion: nil)
-//                    }
-                }
-                
+                let indexSelected = shortestDistance(distanceDictionary: indexCenterDistanceDict)
+                gestureRecognizer.view!.frame = imgUpperViewCollection[indexSelected].frame
+            }
+            // else we return back to the original position from where the pan gesture started
+            else {
+                UIView.animate(withDuration: 5.0, delay: 0.0, usingSpringWithDamping: 2.0, initialSpringVelocity: 2.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                    
+                    //self.view.center.x = 120.0
+                    gestureRecognizer.view!.center = self.initialPoint
+                }, completion: { (true) in
+                    
+                    print("Animation Complete")
+                    print("The init point was := x : \(self.initialPoint.x) y: \(self.initialPoint.y)")
+                    
+                })
+
             }
             
-            let indexSelected = shortestDistance(distanceDictionary: indexCenterDistanceDict)
-            gestureRecognizer.view!.frame = imgUpperViewCollection[indexSelected].frame
+//            for index in 0...(imgUpperViewCollection.count - 1) {
+//                // check intersection of 2 views
+//                if (imgUpperViewCollection[index].frame.intersects(gestureRecognizer.view!.frame)) {
+//                    print("collision detected with \(index) image view")
+//                    viewItersectedIndex.append((index + 1))
+//                    let centerOfIntersected = imgUpperViewCollection[index].center
+//                    let distanceFromCenter = distance(a: pointEnded, b: centerOfIntersected)
+//                    indexCenterDistanceDict[index] = distanceFromCenter
+//                    // this results is view which being moved to occupy the as much space as it's parent view.
+//                    //gestureRecognizer.view!.frame = imgUpperViewCollection[0].frame
+//                }
+//                else {
+//                    
+////                    if gestureRecognizer.state == UIGestureRecognizerState.ended {
+////                        // 1
+////                        let velocity = gestureRecognizer.velocity(in: self.view)
+////                        let magnitude = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
+////                        let slideMultiplier = magnitude / 200
+////                        print("magnitude: \(magnitude), slideMultiplier: \(slideMultiplier)")
+////                        
+////                        // 2
+////                        let slideFactor = 0.1 * slideMultiplier     //Increase for more of a slide
+////                        // 3
+////                        var finalPoint = CGPoint(x:gestureRecognizer.view!.center.x + (velocity.x * slideFactor),
+////                                                 y:gestureRecognizer.view!.center.y + (velocity.y * slideFactor))
+////                        // 4
+////                        finalPoint.x = min(max(finalPoint.x, 0), self.view.bounds.size.width)
+////                        finalPoint.y = min(max(finalPoint.y, 0), self.view.bounds.size.height)
+////                        
+////                        // 5
+////                        UIView.animate(withDuration: Double(slideFactor * 2),
+////                                                   delay: 0,
+////                                                   // 6
+////                                        options: UIViewAnimationOptions.curveEaseOut,
+////                                        animations: {gestureRecognizer.view!.center = finalPoint },
+////                                        completion: nil)
+////                    }
+//                }
+//                
+//            }
+            
             
 //            for index in 0...(imgLowerViewCollection.count - 1) {
 //                // check intersection of 2 views

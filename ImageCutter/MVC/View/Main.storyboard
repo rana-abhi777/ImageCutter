@@ -84,6 +84,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rXj-Py-agu">
+                                <rect key="frame" x="15" y="58" width="289" height="238"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="God-mw-CcM">
                                 <rect key="frame" x="12" y="56" width="96" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -138,6 +143,11 @@
                                 <rect key="frame" x="119" y="0.0" width="32" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="60z-SO-4iY">
+                                <rect key="frame" x="44" y="340" width="219" height="183"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eD-o9-3pZ">
                                 <rect key="frame" x="44" y="340" width="72" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -269,6 +279,8 @@
                         <outlet property="lblTimeLeftTitle" destination="leW-cM-Uck" id="vPu-9r-wl8"/>
                         <outlet property="lblTimeLeftValue" destination="Uso-At-daU" id="DWq-H6-8DG"/>
                         <outlet property="viewImageView" destination="7c0-Z4-xX9" id="jBU-eK-sXt"/>
+                        <outlet property="viewLowerImageViewFrame" destination="60z-SO-4iY" id="jDi-Cu-qV8"/>
+                        <outlet property="viewUpperImageViewFrame" destination="rXj-Py-agu" id="bwo-QI-Ju9"/>
                         <outletCollection property="imgLowerViewCollection" destination="gby-de-1hL" collectionClass="NSMutableArray" id="xu0-3B-fdk"/>
                         <outletCollection property="imgLowerViewCollection" destination="Ww4-wz-YJs" collectionClass="NSMutableArray" id="IGh-rP-8un"/>
                         <outletCollection property="imgLowerViewCollection" destination="JJG-1x-nJV" collectionClass="NSMutableArray" id="hgh-rX-fvR"/>
